@@ -11,6 +11,7 @@ import RxSwift
 final class SearchViewModel {
     var onTeamsDataChanged: (() -> Void)?
     let dataLogic: SearchDataLogicType
+    let translator: TranslatorType
 
     private(set) var teamCellViewModels: [TeamCellViewModel]? {
         didSet {
@@ -25,11 +26,13 @@ final class SearchViewModel {
     init(
         dataLogic: SearchDataLogicType = SearchDataLogic(),
         disposeBag: DisposeBag = DisposeBag(),
-        searchDebouncer: SearchDebouncerType = SearchDebouncer(delayTimer: 1000)
+        searchDebouncer: SearchDebouncerType = SearchDebouncer(delayTimer: 1000),
+        translator: TranslatorType = AppEnvironment.current.translator
     ) {
         self.dataLogic = dataLogic
         self.disposeBag = disposeBag
         self.searchDebouncer = searchDebouncer
+        self.translator = translator
         fetchLeagues()
         subscribeToAutoCompletePublisher()
     }

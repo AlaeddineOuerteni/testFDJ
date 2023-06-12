@@ -13,7 +13,7 @@ final class TeamCollectionViewCell: UICollectionViewCell {
 
     private lazy var logoImageView: UIImageView = {
         let image = UIImageView()
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleAspectFit
         return image
     }()
 

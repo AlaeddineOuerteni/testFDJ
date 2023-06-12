@@ -14,6 +14,9 @@ final class SearchViewController: UIViewController {
             static let spacing: CGFloat = 16
             static let cellHeightRatio: CGFloat = 1
         }
+        enum TranslationKeys {
+            static let searchBarPlaceholder = "search_bar_title"
+        }
     }
 
     private let viewModel: SearchViewModel
@@ -63,6 +66,7 @@ final class SearchViewController: UIViewController {
 
     private func addSearchBar() {
         let searchBar = UISearchBar(frame: .zero)
+        searchBar.placeholder = viewModel.translator.localizeString(key: Config.TranslationKeys.searchBarPlaceholder)
         searchBar.delegate = self
         navigationItem.titleView = searchBar
     }
@@ -94,15 +98,23 @@ extension SearchViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension SearchViewController: UICollectionViewDelegateFlowLayout {
-    public func collectionView(
+    func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let totalWidth = collectionView.frame.width
-        let itemWidth = (totalWidth - Config.Sizes.spacing) / 2
+        let itemWidth = ((totalWidth - Config.Sizes.spacing * 3) / 2)
         let itemHeight = itemWidth * Config.Sizes.cellHeightRatio
         return CGSize(width: itemWidth, height: itemHeight)
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
+        UIEdgeInsets(top: 0, left: Config.Sizes.spacing, bottom: 0, right: Config.Sizes.spacing)
     }
 }
 
